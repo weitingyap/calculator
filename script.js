@@ -56,7 +56,10 @@ function getButtonType(event){
 }
 
 function updateScreen(event){
-    screen.innerText += event.target.innerText;
+    // Only number types are displayed on screen
+    // Note: number input acts as string concatenation
+    
+    if (getButtonType(event) === 'number') screen.innerText += event.target.innerText;
 }
 
 pad.addEventListener('click', updateScreen);
