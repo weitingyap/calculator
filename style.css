@@ -62,6 +62,7 @@ body {
     flex-basis: 0;
     color: var(--font-color);
     font-size: 20px;
+    font-weight: bolder;
     border-radius: var(--border-radius);
     border: var(--font-color) 2px solid;
     margin: 5px;
