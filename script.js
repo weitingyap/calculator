@@ -39,6 +39,22 @@ for (let i = 0; i < nRows; i++){
 
 const screen = document.querySelector("#screen")
 
+function getButtonType(event){
+    const NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const BINARY_OPERATORS = ['+', '-', '/', '*'];
+    const UNARY_OPERATORS = ['+/-', '%'];
+    const CANCEL = ['a/c'];
+    const EQUAL = ['=']; // can be a binary or unary operator
+
+    const innerText = event.target.innerText;
+
+    if (NUMBERS.includes(innerText)) return 'number';
+    if (BINARY_OPERATORS.includes(innerText)) return 'binary_operator';
+    if (UNARY_OPERATORS.includes(innerText)) return 'unary_operator';
+    if (CANCEL.includes(innerText)) return 'cancel';
+    if (EQUAL.includes(innerText)) return 'equal';
+}
+
 function updateScreen(event){
     screen.innerText += event.target.innerText;
 }
