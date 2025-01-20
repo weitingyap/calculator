@@ -37,7 +37,7 @@ for (let i = 0; i < nRows; i++){
 
 // Apply math operations (+, -, /, *) to two operands
 
-function operate(a, b, operator){
+function operate(operator, a, b){
     function add(a, b){
         return a+b;
     }
@@ -54,6 +54,14 @@ function operate(a, b, operator){
         return a*b;
     }
 
+    function toPercent(a){
+        return a/100;
+    }
+
+    function changeSigns(a){
+        return -a;
+    }
+
     switch (operator){
         case '+':
             return add(a,b);
@@ -63,5 +71,9 @@ function operate(a, b, operator){
             return divide(a,b);
         case '*':
             return multiply(a,b);
+        case '%':
+            return toPercent(a);
+        case '+/-':
+            return changeSigns(a);
     }
 }
