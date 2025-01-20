@@ -90,7 +90,7 @@ function getButtonType(event){
     const NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const BINARY_OPERATORS = ['+', '-', '/', '*'];
     const UNARY_OPERATORS = ['+/-', '%'];
-    const CANCEL = ['a/c'];
+    const CANCEL = ['AC'];
     const EQUAL = ['=']; // can be a binary or unary operator
 
     const innerText = event.target.innerText;
@@ -100,6 +100,13 @@ function getButtonType(event){
     if (UNARY_OPERATORS.includes(innerText)) return 'unary_operator';
     if (CANCEL.includes(innerText)) return 'cancel';
     if (EQUAL.includes(innerText)) return 'equal';
+}
+
+function initCalculator(){
+    operands = [];
+    operator = null;
+    screenIsAns = false;
+    clearScreen();
 }
 
 function saveScreenAsOperand(){
@@ -126,7 +133,6 @@ function showUnaryAnswer(ans){
 }
 
 function updateScreen(event){
-    console.log(operands);
     // Only number types are displayed on screen
     // Note: number input acts as string concatenation
 
@@ -176,6 +182,10 @@ function updateScreen(event){
             saveScreenAsOperand();
         }
     }
+
+    // Clear calculator 
+
+    if (getButtonType(event) === 'cancel') initCalculator();
 
 }
 
