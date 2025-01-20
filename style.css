@@ -33,5 +33,25 @@ body {
 
 #pad {
     display: flex;
-    color: inherit;
+    flex-direction: column;
+}
+
+.pad-row {
+    display: flex;
+    justify-content: center;
+}
+
+.pad-btn {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    flex-grow: 1;
+    flex-basis: 0;
+    color: var(--font-color);
+    font-size: 20px;
+    border-radius: 15%;
+    border: var(--font-color) 2px solid;
+    margin: 5px;
+    padding: 10px;
+    height: 60px;
+    width: 60px;
 }
