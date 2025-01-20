@@ -111,9 +111,13 @@ function clearScreen(){
     screen.innerText = "";
 }
 
-function showAnswer(ans){
+function showBinaryAnswer(ans){
     screen.innerText = ans;
     screenIsAns = true;
+}
+
+function showUnaryAnswer(ans){
+    screen.innerText = ans;
 }
 
 function updateScreen(event){
@@ -139,10 +143,17 @@ function updateScreen(event){
             [b, a] = [operands.pop(), operands.pop()]
             ans = operate(operator, a, b);
             operator = event.target.innerText;
-            clearScreen();
-            showAnswer(ans);
+            showBinaryAnswer(ans);
             saveScreenAsOperand();
         }
+    }
+
+    // Unary operators cause operation on current input
+    if (getButtonType(event) === 'unary_operator'){
+        a = Number(screen.innerText);
+        unary_operator = event.target.innerText;
+        ans = operate(unary_operator, a);
+        showUnaryAnswer(ans);
     }
 
     // Equal operator can be unary or binary 
@@ -158,6 +169,7 @@ function updateScreen(event){
             saveScreenAsOperand();
         }
     }
+
 }
 
 pad.addEventListener('click', updateScreen);
