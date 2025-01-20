@@ -118,6 +118,8 @@ function initCalculator(){
 function saveScreenAsOperand(){
     // Take current string input and save as operand
     operands.push(Number(screen.innerText));
+
+    // Reset decimal point button
     pointBtn.disabled = false;
 }
 
@@ -140,13 +142,6 @@ function showUnaryAnswer(ans){
 }
 
 function updateScreen(event){
-
-    console.log('PRESSED')
-    console.log(event.target.innerText);
-    console.log(operator)
-    console.log(operands);
-
-
     // Only number types are displayed on screen
     // Note: number input acts as string concatenation
 
