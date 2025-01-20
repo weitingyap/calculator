@@ -20,10 +20,12 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-radius: var(--border-radius);
     gap: 12px;
     align-items: center;
     background-color: var(--primary-color);
     color: inherit;
+    padding: 20px;
 }
 
 #screen{
