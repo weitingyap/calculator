@@ -25,7 +25,7 @@ for (let i = 0; i < nRows; i++){
         const newPadBtn = padBtn.cloneNode(false);
         newPadBtn.innerText = calcButtons[i][j];
 
-        // blank extra button
+        // Blank extra button
         if (newPadBtn.innerText === ' ') newPadBtn.disabled = true;
 
         // Style clear button red
