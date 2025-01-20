@@ -86,6 +86,7 @@ function operate(operator, a, b){
 
 const screen = document.querySelector("#screen")
 const pointBtn = document.querySelector('.point-btn');
+const MAX_SCREEN_CHAR = 8;
 
 let operands = [];
 let operator = null;
@@ -133,12 +134,30 @@ function appendToScreen(input){
 }
 
 function showBinaryAnswer(ans){
-    screen.innerText = ans;
+    screen.innerText = roundToScreen(ans);
     screenIsAns = true;
 }
 
 function showUnaryAnswer(ans){
-    screen.innerText = ans;
+    screen.innerText = roundToScreen(ans);
+}
+
+function getScreenLength(){
+    return screen.innerText.length;
+}
+
+function roundToScreen(output){
+    if (String(output).length < MAX_SCREEN_CHAR){
+        return output;
+    }
+    if (output % 1){ // output is a float
+        outputArr = String(output).split('.');
+        return output.toFixed(MAX_SCREEN_CHAR - outputArr[0].length - 1);
+    } else if ( output > 0) {        // return max number
+        return 99999999;
+    } else {
+        return -9999999;
+    }
 }
 
 function processButton(event){
@@ -148,11 +167,11 @@ function processButton(event){
         // Note: number input acts as string concatenation
         case ('number'):
             if (screenIsAns) clearScreen;
-            appendToScreen(event.target.innerText);
+            if (getScreenLength() < MAX_SCREEN_CHAR) appendToScreen(event.target.innerText);
             break;
 
         case ('point'):
-            appendToScreen(event.target.innerText);
+            if (getScreenLength() < MAX_SCREEN_CHAR) appendToScreen(event.target.innerText);
             pointBtn.disabled = true;
             break;
 
