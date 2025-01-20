@@ -69,3 +69,7 @@ body {
     height: 60px;
     width: 60px;
 }
+
+.pad-btn.ac-btn{
+    background-color: var(--accent-color);
+}

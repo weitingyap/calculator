@@ -28,6 +28,9 @@ for (let i = 0; i < nRows; i++){
         // blank extra button
         if (newPadBtn.innerText === ' ') newPadBtn.disabled = true;
 
+        // Style clear button red
+        if (newPadBtn.innerText === 'AC') newPadBtn.classList.add('ac-btn');
+
         newPadRow.appendChild(newPadBtn);
     }
 }
