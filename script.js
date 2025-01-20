@@ -35,6 +35,16 @@ for (let i = 0; i < nRows; i++){
     }
 }
 
+// Register button input and display
+
+const screen = document.querySelector("#screen")
+
+function updateScreen(event){
+    screen.innerText += event.target.innerText;
+}
+
+pad.addEventListener('click', updateScreen);
+
 // Apply math operations (+, -, /, *) to two operands
 
 function operate(operator, a, b){
