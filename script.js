@@ -31,6 +31,9 @@ for (let i = 0; i < nRows; i++){
         // Style clear button red
         if (newPadBtn.innerText === 'AC') newPadBtn.classList.add('ac-btn');
 
+        // Add class to decimal point button to disable more than one point
+        if (newPadBtn.innerText === '.') newPadBtn.classList.add('point-btn');
+
         newPadRow.appendChild(newPadBtn);
     }
 }
@@ -81,6 +84,7 @@ function operate(operator, a, b){
 // Register button input and display
 
 const screen = document.querySelector("#screen")
+const pointBtn = document.querySelector('.point-btn');
 
 let operands = [];
 let operator = null;
@@ -88,6 +92,7 @@ let screenIsAns = false;
 
 function getButtonType(event){
     const NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const DECIMAL_POINT = ['.'];
     const BINARY_OPERATORS = ['+', '-', '/', '*'];
     const UNARY_OPERATORS = ['+/-', '%'];
     const CANCEL = ['AC'];
@@ -96,6 +101,7 @@ function getButtonType(event){
     const innerText = event.target.innerText;
 
     if (NUMBERS.includes(innerText)) return 'number';
+    if (DECIMAL_POINT.includes(innerText)) return 'point';
     if (BINARY_OPERATORS.includes(innerText)) return 'binary_operator';
     if (UNARY_OPERATORS.includes(innerText)) return 'unary_operator';
     if (CANCEL.includes(innerText)) return 'cancel';
@@ -112,6 +118,7 @@ function initCalculator(){
 function saveScreenAsOperand(){
     // Take current string input and save as operand
     operands.push(Number(screen.innerText));
+    pointBtn.disabled = false;
 }
 
 function clearScreen(){
@@ -139,6 +146,11 @@ function updateScreen(event){
     if (getButtonType(event) === 'number') {
         if (screenIsAns) clearScreen();
         appendToScreen(event.target.innerText);
+    }
+
+    if (getButtonType(event) === 'point'){
+        appendToScreen(event.target.innerText);
+        pointBtn.disabled = true;
     }
 
     // Binary operators cause either:
