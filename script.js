@@ -165,6 +165,7 @@ function updateScreen(event){
     // If there is only one operand, do nothing
 
     if (getButtonType(event) === 'equal'){
+        saveScreenAsOperand();
         if (operands.length > 1) {
             [b, a] = [operands.pop(), operands.pop()]
             ans = operate(operator, a, b);
