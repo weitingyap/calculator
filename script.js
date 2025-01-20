@@ -111,6 +111,11 @@ function clearScreen(){
     screen.innerText = "";
 }
 
+function appendToScreen(input){
+    // number or decimal point input
+    screen.innerText += input;
+}
+
 function showBinaryAnswer(ans){
     screen.innerText = ans;
     screenIsAns = true;
@@ -126,7 +131,7 @@ function updateScreen(event){
 
     if (getButtonType(event) === 'number') {
         if (screenIsAns) clearScreen();
-        screen.innerText += event.target.innerText;
+        appendToScreen(event.target.innerText);
     }
 
     // Binary operators cause either:
