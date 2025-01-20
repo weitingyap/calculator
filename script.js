@@ -82,6 +82,10 @@ function operate(operator, a, b){
 
 const screen = document.querySelector("#screen")
 
+let operands = [];
+let operator = null;
+let screenIsAns = false;
+
 function getButtonType(event){
     const NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const BINARY_OPERATORS = ['+', '-', '/', '*'];
@@ -98,11 +102,48 @@ function getButtonType(event){
     if (EQUAL.includes(innerText)) return 'equal';
 }
 
+function saveScreenAsOperand(){
+    // Take current string input and save as operand
+    operands.push(Number(screen.innerText));
+}
+
+function clearScreen(){
+    screen.innerText = "";
+}
+
+function showAnswer(ans){
+    screen.innerText = ans;
+    screenIsAns = true;
+}
+
 function updateScreen(event){
     // Only number types are displayed on screen
     // Note: number input acts as string concatenation
 
-    if (getButtonType(event) === 'number') screen.innerText += event.target.innerText;
+    if (getButtonType(event) === 'number') {
+        if (screenIsAns) clearScreen();
+        screen.innerText += event.target.innerText;
+    }
+
+    // Binary operators cause either:
+    // (a) If there is only one operand entered, for it to be stored
+    // (b) If two operands have been entered, for the operations between them be executed
+
+    if (getButtonType(event) === 'binary_operator'){
+        saveScreenAsOperand();
+        clearScreen();
+
+        if (operands.length === 1) {
+            operator = event.target.innerText;
+        } else {                 // at least two operands
+            [b, a] = [operands.pop(), operands.pop()]
+            ans = operate(operator, a, b);
+            operator = event.target.innerText;
+            clearScreen();
+            showAnswer(ans);
+            saveScreenAsOperand();
+        }
+    }
 }
 
 pad.addEventListener('click', updateScreen);
