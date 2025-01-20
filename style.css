@@ -26,6 +26,7 @@ body {
     background-color: var(--primary-color);
     color: inherit;
     padding: 20px;
+    border: var(--font-color) 2px solid;
 }
 
 #screen{
