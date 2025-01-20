@@ -119,7 +119,6 @@ function saveScreenAsOperand(){
     // Take current string input and save as operand
     operands.push(Number(screen.innerText));
 
-    // Reset decimal point button
     pointBtn.disabled = false;
 }
 
@@ -141,65 +140,63 @@ function showUnaryAnswer(ans){
     screen.innerText = ans;
 }
 
-function updateScreen(event){
-    // Only number types are displayed on screen
-    // Note: number input acts as string concatenation
+function processButton(event){
+    switch (getButtonType(event)){
 
-    if (getButtonType(event) === 'number') {
-        if (screenIsAns) clearScreen();
-        appendToScreen(event.target.innerText);
-    }
+        // Only number types are displayed on screen
+        // Note: number input acts as string concatenation
+        case ('number'):
+            if (screenIsAns) clearScreen;
+            appendToScreen(event.target.innerText);
+            break;
 
-    if (getButtonType(event) === 'point'){
-        appendToScreen(event.target.innerText);
-        pointBtn.disabled = true;
-    }
+        case ('point'):
+            appendToScreen(event.target.innerText);
+            pointBtn.disabled = true;
+            break;
 
-    // Binary operators cause either:
-    // (a) If there is only one operand entered, for it to be stored
-    // (b) If two operands have been entered, for the operations between them be executed
+        // Unary operators cause operation on current input
+        case ('unary_operator'):
+            a = Number(screen.innerText);
+            unary_operator = event.target.innerText;
+            ans = operate(unary_operator, a);
+            showUnaryAnswer(ans);
+            break;
 
-    if (getButtonType(event) === 'binary_operator'){
-        saveScreenAsOperand();
-        clearScreen();
+        // Binary operators cause either:
+        // (a) If there is only one operand entered, for it to be stored
+        // (b) If two operands have been entered, for the operations between them be executed
 
-        if (operands.length === 1) {
-            operator = event.target.innerText;
-        } else {                 // at least two operands
-            [b, a] = [operands.pop(), operands.pop()]
-            ans = operate(operator, a, b);
-            operator = event.target.innerText;
-            showBinaryAnswer(ans);
+        case ('binary_operator'):
             saveScreenAsOperand();
-        }
+            clearScreen();
+
+            if (operands.length === 1) {
+                operator = event.target.innerText;
+            } else {                 // at least two operands
+                [b, a] = [operands.pop(), operands.pop()]
+                ans = operate(operator, a, b);
+                showBinaryAnswer(ans);
+                saveScreenAsOperand();
+                operator = event.target.innerText;
+            }
+
+            break;
+
+        case ('equal'):
+            if (operator != null) saveScreenAsOperand();
+            if (operands.length > 1) {
+                [b, a] = [operands.pop(), operands.pop()]
+                ans = operate(operator, a, b);
+                operator = null;
+                showBinaryAnswer(ans);
+            }
+            break;
+
+        case ('cancel'):
+            initCalculator();
+            break;
     }
-
-    // Unary operators cause operation on current input
-    if (getButtonType(event) === 'unary_operator'){
-        a = Number(screen.innerText);
-        unary_operator = event.target.innerText;
-        ans = operate(unary_operator, a);
-        showUnaryAnswer(ans);
-    }
-
-    // Equal operator can be unary or binary 
-    // If there is only one operand, do nothing
-
-    if (getButtonType(event) === 'equal'){
-        if (operator != null) saveScreenAsOperand();
-        if (operands.length > 1) {
-            [b, a] = [operands.pop(), operands.pop()]
-            ans = operate(operator, a, b);
-            operator = null;
-            showBinaryAnswer(ans);
-        }
-    }
-
-    // Clear calculator 
-
-    if (getButtonType(event) === 'cancel') initCalculator();
-
-    console.log(operands);
 }
 
-pad.addEventListener('click', updateScreen);
+pad.addEventListener('click', processButton);
