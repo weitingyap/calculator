@@ -140,6 +140,13 @@ function showUnaryAnswer(ans){
 }
 
 function updateScreen(event){
+
+    console.log('PRESSED')
+    console.log(event.target.innerText);
+    console.log(operator)
+    console.log(operands);
+
+
     // Only number types are displayed on screen
     // Note: number input acts as string concatenation
 
@@ -188,10 +195,8 @@ function updateScreen(event){
         if (operands.length > 1) {
             [b, a] = [operands.pop(), operands.pop()]
             ans = operate(operator, a, b);
-            operator = event.target.innerText;
-            clearScreen();
-            showUnaryAnswer(ans);
-            saveScreenAsOperand();
+            operator = null;
+            showBinaryAnswer(ans);
         }
     }
 
@@ -199,6 +204,7 @@ function updateScreen(event){
 
     if (getButtonType(event) === 'cancel') initCalculator();
 
+    console.log(operands);
 }
 
 pad.addEventListener('click', updateScreen);
