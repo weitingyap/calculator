@@ -126,6 +126,7 @@ function showUnaryAnswer(ans){
 }
 
 function updateScreen(event){
+    console.log(operands);
     // Only number types are displayed on screen
     // Note: number input acts as string concatenation
 
@@ -165,13 +166,13 @@ function updateScreen(event){
     // If there is only one operand, do nothing
 
     if (getButtonType(event) === 'equal'){
-        saveScreenAsOperand();
+        if (operator != null) saveScreenAsOperand();
         if (operands.length > 1) {
             [b, a] = [operands.pop(), operands.pop()]
             ans = operate(operator, a, b);
             operator = event.target.innerText;
             clearScreen();
-            showAnswer(ans);
+            showUnaryAnswer(ans);
             saveScreenAsOperand();
         }
     }
