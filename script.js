@@ -144,6 +144,20 @@ function updateScreen(event){
             saveScreenAsOperand();
         }
     }
+
+    // Equal operator can be unary or binary 
+    // If there is only one operand, do nothing
+
+    if (getButtonType(event) === 'equal'){
+        if (operands.length > 1) {
+            [b, a] = [operands.pop(), operands.pop()]
+            ans = operate(operator, a, b);
+            operator = event.target.innerText;
+            clearScreen();
+            showAnswer(ans);
+            saveScreenAsOperand();
+        }
+    }
 }
 
 pad.addEventListener('click', updateScreen);
