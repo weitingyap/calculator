@@ -5,3 +5,33 @@
     --secondary-color: #FFCB77;
     --accent-color: #FE6D73;
 }
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+}
+
+#calculator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: inherit;
+}
+
+#screen{
+    background-color: var(--bg-color);
+    text-align: right;
+    color: inherit;
+}
+
+#pad {
+    display: flex;
+    color: inherit;
+}
